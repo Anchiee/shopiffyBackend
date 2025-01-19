@@ -13,7 +13,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   require_once "../database/ReadData.php";
 
   $data = json_decode(file_get_contents("php://input"));
-  if(empty($data->username) || empty($data->email) || empty($data->password) || empty($data->confirmPassword)) {
+  if(empty($data->username) || empty($data->email) || empty($data->password)) {
     echo json_encode([
       "status" => "error",
       "message" => "Empty input"
@@ -24,16 +24,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   $username = htmlspecialchars($data->username);
   $email = htmlspecialchars($data->email);
   $password = htmlspecialchars($data->password);
-  $confirmPassword = htmlspecialchars($data->confirmPassword);
 
-  if($password != $confirmPassword) {
-    echo json_encode([
-      "status" => "error",
-      "message" => "Passwords do not match"
-    ]);
-    die();
-  }
-  else if(!empty(returnUser($username))) {
+  if(!empty(returnUser($username))) {
     echo json_encode([
       "status" => "error",
       "message" => "Username exists"
