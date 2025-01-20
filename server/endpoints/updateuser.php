@@ -62,7 +62,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       ]);
       break;
 
-    case "PASSWORD":
+    case "NEW PASSWORD":
       $hashedPassword = password_hash($newData, PASSWORD_DEFAULT);
       UpdateUser("PASSWORD", $_SESSION["username"], $hashedPassword);
       echo json_encode([
