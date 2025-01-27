@@ -17,6 +17,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     ]);
     die();
   }
+  else if($data->product == "none") {
+    $products = returnProducts();
+
+    echo json_encode([
+      "status" => "success",
+      "message" => "successfully retrieved the products",
+      "info" => $products
+    ]);
+    die();
+  }
 
   $products = returnSpecifiedProduct($data->product);
 
