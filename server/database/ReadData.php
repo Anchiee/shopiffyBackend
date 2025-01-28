@@ -92,34 +92,52 @@ function returnProductByFilter($category, $brands, $os)
 
     $conditions = [];
     $params = [];
+    $query;
+    $stmt;
 
-    $query = "SELECT * FROM products WHERE";
-
-    if(!empty($category)) {
-      $params[":category"] = $category;
-      $conditions[] =  "category = :category";
+    if(empty($category) && empty($brands) && empty($os)) {
+      $query = "SELECT * FROM products;";
+      $stmt = $pdo->prepare($query);
+      $stmt->execute();
     }
+    
+    else {
+      $query = "SELECT * FROM products WHERE ";
 
-    if(!empty($brands)) {
-      for($i = 0; $i < sizeof($brands); $i++) {
-        $params[":brand$i"] = $brands[$i];
-        $conditions[] = "brand = :brand$i";
+      if(!empty($category)) {
+        $params[":category"] = $category;
+        $conditions[] =  "category = :category";
       }
+  
+      if(!empty($brands)) {
+        $brandQuery = "brand IN(";
+  
+        $brandsArr = [];
+  
+        for($i = 0; $i < sizeof($brands); $i++) {
+          $params[":brand$i"] = $brands[$i];
+          $brandsArr[] = ":brand$i";
+        }
+        $brandQuery .= implode(",", $brandsArr);
+        $brandQuery .= ")";
+  
+        $conditions[] = $brandQuery;
+      }
+  
+      if(!empty($os)) {
+        $params[":os"] = $os;
+        $conditions[] = "system = :os";
+      }
+  
+      $query .= implode(" AND ", $conditions);
+      $query .= ";";
+      $stmt = $pdo->prepare($query);
 
+      $stmt->execute($params);
     }
 
-    if(!empty($os)) {
-      $params[":os"] = $os;
-      $conditions[] = "system = :os";
-    }
 
-    $query .= " BRAND IN( " . implode(",", $conditions) . ")";
-    $query .= ";";
-
-    $stmt = $pdo->prepare($query);
-
-
-    $stmt->execute($params);
+    
 
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

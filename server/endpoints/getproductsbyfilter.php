@@ -17,8 +17,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   $brands = [];
   $os = null;
 
-
-
   if(!empty($data->category) && $data->category !== "none") {
     $category = $data->category;
   }
