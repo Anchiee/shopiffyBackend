@@ -28,7 +28,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     die();
   }
 
-  $products = returnSpecifiedProduct($data->product);
+  $products = returnProductByName($data->product);
 
   if(empty($products)) {
     echo json_encode([
@@ -41,7 +41,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   echo json_encode([
     "status" => "success",
     "message" => "successfully retrieved the products",
-    "info" => $products
   ]);
   die();
 }

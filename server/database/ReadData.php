@@ -56,7 +56,7 @@ function returnProducts()
 }
 
 
-function returnSpecifiedProduct($parameter)
+function returnProductByName($parameter)
 {
   try
   {
@@ -76,6 +76,58 @@ function returnSpecifiedProduct($parameter)
     $pdo = null;
 
     return $result;
+
+  } catch(PDOException $e) {
+    echo "Query failed:" . $e->getMessage();
+    die();
+  }
+}
+
+
+function returnProductByFilter($category, $brands, $os)
+{
+  try {
+
+    require_once "dbh.php";
+
+    $conditions = [];
+    $params = [];
+
+    $query = "SELECT * FROM products WHERE";
+
+    if(!empty($category)) {
+      $params[":category"] = $category;
+      $conditions[] =  "category = :category";
+    }
+
+    if(!empty($brands)) {
+      for($i = 0; $i < sizeof($brands); $i++) {
+        $params[":brand$i"] = $brands[$i];
+        $conditions[] = "brand = :brand$i";
+      }
+
+    }
+
+    if(!empty($os)) {
+      $params[":os"] = $os;
+      $conditions[] = "system = :os";
+    }
+
+    $query .= " " . implode(" AND ", $conditions);
+    $query .= ";";
+
+    $stmt = $pdo->prepare($query);
+
+
+    $stmt->execute($params);
+
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $pdo = null;
+    $stmt = null;
+
+    return $result;
+
 
   } catch(PDOException $e) {
     echo "Query failed:" . $e->getMessage();
