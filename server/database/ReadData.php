@@ -113,7 +113,7 @@ function returnProductByFilter($category, $brands, $os)
       $conditions[] = "system = :os";
     }
 
-    $query .= " " . implode(" AND ", $conditions);
+    $query .= " BRAND IN( " . implode(",", $conditions) . ")";
     $query .= ";";
 
     $stmt = $pdo->prepare($query);
