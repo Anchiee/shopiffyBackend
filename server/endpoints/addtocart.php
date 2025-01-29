@@ -36,7 +36,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
   echo json_encode([
     "status" => "success",
-    "message" => "successfully added to the cart"
+    "message" => "successfully added to the cart",
+    "productAdded" => $productData
   ]);
   die();
 
