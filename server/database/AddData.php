@@ -23,3 +23,30 @@ function AddUser($username, $password, $email)
     echo $e->getMessage();
   }
 }
+
+
+function AddToCart($userId, $productId)
+{
+
+  try {
+
+    require "dbh.php";
+
+    $query = "INSERT INTO cart(productId, userId) VALUES(:productId, :userId);";
+    $stmt = $pdo->prepare($query);
+
+    $stmt->bindParam(":productId", $productId);
+    $stmt->bindParam(":userId", $userId);
+
+    $stmt->execute();
+
+    $stmt = null;
+    $pdo = null;
+
+  } catch(PDOException $e) {
+    echo "Query failed:" . $e->getMessage();
+    die();
+  }
+
+
+}

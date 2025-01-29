@@ -60,7 +60,7 @@ function returnProductByName($parameter)
 {
   try
   {
-    require_once "dbh.php";
+    require "dbh.php";
 
     $query = "SELECT * FROM products WHERE model = :argument OR brand = :argument OR category = :argument OR 
     system = :argument;";
@@ -70,7 +70,7 @@ function returnProductByName($parameter)
 
     $stmt->execute();
 
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
     $stmt = null;
     $pdo = null;
