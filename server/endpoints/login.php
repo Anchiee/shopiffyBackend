@@ -50,9 +50,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     "username" => $username,
     "email" => $email
   ]);
-
   die();
-
-
 
 }

@@ -56,7 +56,7 @@ function returnProducts()
 }
 
 
-function returnProductByName($parameter)
+function returnProductsByName($parameter)
 {
   try
   {
@@ -70,7 +70,7 @@ function returnProductByName($parameter)
 
     $stmt->execute();
 
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $stmt = null;
     $pdo = null;
@@ -84,7 +84,7 @@ function returnProductByName($parameter)
 }
 
 
-function returnProductByFilter($category, $brands, $os)
+function returnProductsByFilter($category, $brands, $os)
 {
   try {
 
@@ -130,7 +130,7 @@ function returnProductByFilter($category, $brands, $os)
       }
   
       $query .= implode(" AND ", $conditions);
-      $query .= ";";
+
       $stmt = $pdo->prepare($query);
 
       $stmt->execute($params);
@@ -146,6 +146,57 @@ function returnProductByFilter($category, $brands, $os)
 
     return $result;
 
+
+  } catch(PDOException $e) {
+    echo "Query failed:" . $e->getMessage();
+    die();
+  }
+}
+
+
+function returnProductInfo($id)
+{
+  try {
+
+    require "dbh.php";
+
+    $query = "SELECT * FROM products WHERE id = :argument OR model = :argument;";
+    $stmt = $pdo->prepare($query);
+
+    $stmt->bindParam(":argument", $id);
+    $stmt->execute();
+
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $stmt = null;
+    $pdo = null;
+    
+    return $result;
+
+  } catch(PDOException $e) {
+    echo "Query failed:" . $e->getMessage();
+    die();
+  }
+}
+
+function returnUserCart($id)
+{
+  try {
+
+    require "dbh.php";
+
+    $query = "SELECT productId FROM cart WHERE userId = :id;";
+    $stmt = $pdo->prepare($query);
+
+    $stmt->bindParam(":id", $id);
+    $stmt->execute();
+
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $stmt = null;
+    $pdo = null;
+    
+    return $result;
 
   } catch(PDOException $e) {
     echo "Query failed:" . $e->getMessage();

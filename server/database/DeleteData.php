@@ -21,3 +21,29 @@ function DeleteUser($username) {
     die();
   }
 }
+
+function deleteFromCart($productId, $userId)
+{
+  try {
+
+    require "dbh.php";
+
+    $query = "DELETE FROM cart WHERE productId = :productId AND userId = :userId;";
+
+    $stmt = $pdo->prepare($query);
+
+    $stmt->bindParam(":productId", $productId);
+    $stmt->bindParam(":userId", $userId);
+
+    $stmt->execute();
+
+    $stmt = null;
+    $pdo = null;
+    die();
+
+  } catch(PDOException $e) {
+    echo "Query failed:" . $e->getMessage();
+    die();
+  }
+
+}

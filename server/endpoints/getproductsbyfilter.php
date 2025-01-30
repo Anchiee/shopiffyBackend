@@ -32,7 +32,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $os = $data->os;
   }
 
-  $result = returnProductByFilter($category, $brands, $os);
+  $result = returnProductsByFilter($category, $brands, $os);
 
   if(empty($result)) {
     echo json_encode([
