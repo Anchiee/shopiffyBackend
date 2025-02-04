@@ -39,7 +39,6 @@ function deleteFromCart($productId, $userId)
 
     $stmt = null;
     $pdo = null;
-    die();
 
   } catch(PDOException $e) {
     echo "Query failed:" . $e->getMessage();
