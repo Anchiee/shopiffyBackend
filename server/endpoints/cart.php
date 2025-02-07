@@ -3,7 +3,7 @@
 
 header("Access-control-Allow-Origin: http://192.168.0.13:5173");
 header("Access-Control-Allow-Headers: Content-Type");
-header("Access-Control-Allow-Methods: POST, GET, DELETE, PUT");
+header("Access-Control-Allow-Methods: POST, GET, DELETE");
 header("Access-Control-Allow-Credentials: true");
 
 
@@ -35,7 +35,6 @@ switch($_SERVER["REQUEST_METHOD"]) {
     $cartProducts = [];
 
 
-    print_r($userCart);
 
     foreach($userCart as $product) {
       $cartProducts[] = returnProductInfo($product["productId"]);
