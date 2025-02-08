@@ -10,9 +10,9 @@ header("Access-Control-Allow-Credentials: true");
 switch($_SERVER["REQUEST_METHOD"]) {
   
   case "POST":
-    require_once "../config/session.php";
-    require_once "../database/ReadData.php";
-    require_once "../database/AddData.php";
+    require_once "../../config/session.php";
+    require_once "../../database/ReadData.php";
+    require_once "../../database/AddData.php";
 
 
     $data = json_decode(file_get_contents("php://input"));
@@ -68,8 +68,8 @@ switch($_SERVER["REQUEST_METHOD"]) {
     break;
   
   case "GET":
-    require_once "../config/session.php";
-    require_once "../database/ReadData.php";
+    require_once "../../config/session.php";
+    require_once "../../database/ReadData.php";
 
     $username = $_SESSION["username"];
     $userData = returnUser($username);
@@ -101,9 +101,9 @@ switch($_SERVER["REQUEST_METHOD"]) {
     break;
   
   case "DELETE":
-    require_once "../database/DeleteData.php";
-    require_once "../database/ReadData.php";
-    require_once "../config/session.php";
+    require_once "../../database/DeleteData.php";
+    require_once "../../database/ReadData.php";
+    require_once "../../config/session.php";
 
 
     $username = $_SESSION["username"];

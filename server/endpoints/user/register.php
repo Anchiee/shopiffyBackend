@@ -8,9 +8,9 @@ header("Access-Control-Allow-Credentials: true");
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
-  require_once "../config/session.php";
-  require_once "../database/AddData.php";
-  require_once "../database/ReadData.php";
+  require_once "../../config/session.php";
+  require_once "../../database/AddData.php";
+  require_once "../../database/ReadData.php";
 
   $data = json_decode(file_get_contents("php://input"));
   if(empty($data->username) || empty($data->email) || empty($data->password)) {

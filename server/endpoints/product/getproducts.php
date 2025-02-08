@@ -7,7 +7,7 @@ header("Access-Control-Allow-Headers: Content-Type");
 
 if($_SERVER["REQUEST_METHOD"] == "GET")
 {
-  require_once "../database/ReadData.php";
+  require_once "../../database/ReadData.php";
 
   $products = returnProducts();
 

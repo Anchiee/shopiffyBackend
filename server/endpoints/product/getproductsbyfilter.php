@@ -9,7 +9,7 @@ header("Access-Control-Allow-Headers: Content-Type");
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
-  require_once "../database/ReadData.php";
+  require_once "../../database/ReadData.php";
 
   $data = json_decode(file_get_contents("php://input"));
 

@@ -8,8 +8,8 @@ header("Access-Control-Allow-Origin: http://192.168.0.13:5173");
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
-  require_once "../database/ReadData.php";
-  require_once "../config/session.php";
+  require_once "../../database/ReadData.php";
+  require_once "../../config/session.php";
 
   $data = json_decode(file_get_contents("php://input"));
 
